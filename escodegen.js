@@ -2161,6 +2161,18 @@
             return join(result, fragment);
         },
 
+        PropertyDefinition: function (expr, precedence, flags) {
+            var result;
+            if (expr['static']) {
+              result = ['static' + space];
+            } else {
+              result = [];
+            }
+            result.push(this.generateAssignment(expr.key, expr.value, '=', precedence, flags));
+            result.push(this.semicolon(flags));
+            return result;
+          },
+
         Property: function (expr, precedence, flags) {
             if (expr.kind === 'get' || expr.kind === 'set') {
                 return [
